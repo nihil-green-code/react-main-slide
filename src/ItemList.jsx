@@ -1,9 +1,12 @@
-import { items } from "./data/itemData";
+import Rating from "./components/itemList/Rating";
+import itemsData from "./data/itemData";
 
 const ItemList = () => {
+  const sortedData = [...itemsData].sort((a, b) => b.createdAt - a.createdAt).slice(0, 6);
+
   return (
     <>
-      {items.map((item, index) => (
+      {sortedData.map((item, index) => (
         <div key={item.name + index} className='item'>
           <div className="item-image">
             <a href={item.link}>
@@ -15,12 +18,8 @@ const ItemList = () => {
           </p>
           <p className="item-price">{item.price.toLocaleString()}원</p>
           <p className="item-rating">
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star-half-alt"></i>
-            <span className="rating-number"> ({item.rate})</span>
+            <Rating rating={item.score} />
+            <span className="rating-number">{' '}({item.score})</span>
           </p>
         </div>
       ))}
